@@ -20,6 +20,7 @@ erDiagram
         string cover_url
         longtext content
         string robotics_kit
+        bigint robotics_kit_id FK
     }
 
     COURSE_MATERIALS {
@@ -43,8 +44,15 @@ erDiagram
         bigint course_id FK
     }
 
+    ROBOTICS_KITS {
+        bigint id PK
+        string name
+        string description
+    }
+
     USERS ||--o{ ENROLLMENTS : enrolls
     GROUPS ||--o{ ENROLLMENTS : includes
     GROUPS ||--o{ GROUP_COURSE : offers
     COURSES ||--o{ GROUP_COURSE : assigned
     COURSES ||--o{ COURSE_MATERIALS : has
+    ROBOTICS_KITS ||--o{ COURSES : contains

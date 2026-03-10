@@ -4,11 +4,14 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Course;
+use App\Models\RoboticsKit;
 
 class CourseSeeder extends Seeder
 {
     public function run(): void
     {
+        $kits = RoboticsKit::query()->pluck('id', 'name');
+
         $courses = [
             [
                 'key' => 'Rob101',
@@ -33,6 +36,9 @@ class CourseSeeder extends Seeder
         ];
 
         foreach ($courses as $course) {
+            $kitId = $kits[$course['robotics_kit']] ?? null;
+            $course['robotics_kit_id'] = $kitId;
+
             Course::updateOrCreate(
                 ['key' => $course['key']],
                 $course
