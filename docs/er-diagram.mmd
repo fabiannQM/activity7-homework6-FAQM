@@ -1,0 +1,50 @@
+erDiagram
+    USERS {
+        bigint id PK
+        string name
+        string email
+        string password
+        string role
+    }
+
+    GROUPS {
+        bigint id PK
+        string name
+        string description
+    }
+
+    COURSES {
+        bigint id PK
+        string key
+        string title
+        string cover_url
+        longtext content
+        string robotics_kit
+    }
+
+    COURSE_MATERIALS {
+        bigint id PK
+        bigint course_id FK
+        string title
+        string material_url
+        text notes
+    }
+
+    ENROLLMENTS {
+        bigint id PK
+        bigint user_id FK
+        bigint group_id FK
+        timestamp enrolled_at
+    }
+
+    GROUP_COURSE {
+        bigint id PK
+        bigint group_id FK
+        bigint course_id FK
+    }
+
+    USERS ||--o{ ENROLLMENTS : enrolls
+    GROUPS ||--o{ ENROLLMENTS : includes
+    GROUPS ||--o{ GROUP_COURSE : offers
+    COURSES ||--o{ GROUP_COURSE : assigned
+    COURSES ||--o{ COURSE_MATERIALS : has
